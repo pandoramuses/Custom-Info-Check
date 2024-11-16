@@ -98,6 +98,8 @@ def main(source_data, name_translate_dict, year_translate_dict, keep_columns=Non
     result_df = pd.concat([name_df, year_df, pic_df], ignore_index=False, axis=1)
     result_df.columns = ["名字信息", "年份信息", "图片信息"]
     result_df = result_df[result_df["图片信息"] != ""]
+    result_df["名字信息"] = result_df["名字信息"].apply(lambda x: ("名字：" + (x.split(":")[1]).strip()) if x != "" else "")
+    result_df["年份信息"] = result_df["年份信息"].apply(lambda x: ("年份：" + (x.split(":")[1]).strip()) if x != "" else "")
     result_df["图片信息"] = result_df["图片信息"].apply(lambda x: x.split("：")[1])
     result_df.reset_index(inplace=True)
 
