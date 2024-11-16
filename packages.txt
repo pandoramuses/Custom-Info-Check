@@ -1,0 +1,8 @@
+build-essential
+pkg-config
+default-libmysqlclient-dev
+ffmpeg
+gifsicle
+python3-dev
+gdal-bin
+libgdal-dev
