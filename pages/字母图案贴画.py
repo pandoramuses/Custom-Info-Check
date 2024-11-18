@@ -107,7 +107,7 @@ if file is not None:
 
             st.download_button(label="下载处理好的Excel表格", data=buffer, file_name="处理后的贴片信息.xlsx",
                                mime="application/vnd.ms-excel")
-            st.header("注意：将原本表格移动到输出的文件内，补丁图标就能正常显示")
+            st.header("注意：将原本的表格移动到输出的文件内，补丁图标就能正常显示")
     else:
         pass
 else:

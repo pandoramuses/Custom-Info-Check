@@ -167,4 +167,4 @@ if file is not None:
         writer.close()
 
         st.download_button(label="下载处理好的Excel表格", data=buffer, file_name="处理后的宠物陶瓷球信息表格.xlsx", mime="application/vnd.ms-excel")
-        st.subheader("注意：将原本表格移动到输出的文件内，图片单元格就能正常显示")
+        st.subheader("注意：将原本的表格移动到输出的文件内，图片单元格就能正常显示")
