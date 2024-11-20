@@ -66,7 +66,7 @@ if file is not None:
 
     # 根据选择的表格，展示表格内容
     st.header("表格数据预览")
-    show_df = st.dataframe(df_list[sheet_choice])
+    show_df = st.dataframe(df_list[sheet_choice], hide_index=True)
 
     # 补丁数量记录
     num = st.number_input(label="最多一行的补丁数量", value=6)
@@ -105,8 +105,7 @@ if file is not None:
             # 关闭文件
             writer.close()
 
-            st.download_button(label="下载处理好的Excel表格", data=buffer, file_name="处理后的贴片信息.xlsx",
-                               mime="application/vnd.ms-excel")
+            st.download_button(label="下载处理好的Excel表格", data=buffer, file_name="处理后的贴片信息.xlsx", mime="application/vnd.ms-excel")
             st.header("注意：将原本的表格移动到输出的文件内，补丁图标就能正常显示")
     else:
         pass

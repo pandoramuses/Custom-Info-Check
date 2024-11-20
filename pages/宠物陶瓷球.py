@@ -116,11 +116,11 @@ if file is not None:
     sheet_name = st.selectbox("选择表格", sheet_names)
     st.header("数据预览")
     data = sheet_names[sheet_name]
-    st.dataframe(data)
+    st.dataframe(data, hide_index=True)
 else:
     example = get_example()
     st.header("示例数据预览")
-    st.dataframe(example)
+    st.dataframe(example, hide_index=True)
 
 
 # 读取关键词对应信息并打印
