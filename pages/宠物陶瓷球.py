@@ -1,25 +1,15 @@
-import json
 import io
 
 import streamlit as st
 import pandas as pd
+
+from components.json_read_write import get_match_dict, update_match_dict
 
 
 # 获取示例数据，写入缓存不更新
 @st.cache_data
 def get_example():
     return pd.read_excel("data/宠物陶瓷球/宠物陶瓷球实例数据.xlsx")
-
-# 读取关键词对应表，涉及到字典更新，所以不进行缓存
-def get_match_dict(filepath):
-    with open(filepath, encoding="utf-8") as f:
-        dict_info = json.load(f, strict=False)
-    return dict_info
-
-# 添加后的关键词对应表回写到文件，进行更新
-def update_match_dict(filepath, dict_kind):
-    with open(filepath, "w", encoding="utf-8") as f:
-        f.write(json.dumps(dict_kind, indent=2, ensure_ascii=False))
 
 # 字符串内容替换
 def string_replace(string, trans_dict):
@@ -131,13 +121,13 @@ year_match_dict = get_match_dict("data/宠物陶瓷球/年份关键词对应.jso
 name_tab, year_tab, add_new_tab = st.tabs(["名字关键词", "年份关键词", "新增关键词"])
 with name_tab:
     st.subheader("名字关键词对应关系")
-    st.write(name_match_dict)
+    st.json(name_match_dict)
 with year_tab:
     st.subheader("年份关键词对应关系")
-    st.write(year_match_dict)
+    st.json(year_match_dict)
 with add_new_tab:
     st.subheader("新增关键词对应关系")
-    kind, english_key, chinese_value, add_button = st.columns(4)
+    kind, english_key, chinese_value, add_button = st.columns(4, vertical_alignment="center")
     with kind:
         selected_kind = st.selectbox("关键词类型", ["名字关键词", "年份关键词"])
     with english_key:
@@ -156,6 +146,7 @@ with add_new_tab:
 
 
 # 处理完的结果提供下载链接
+st.divider()
 if file is not None:
     output_data = main(data, name_match_dict, year_match_dict)  # 处理完成的表格
 
