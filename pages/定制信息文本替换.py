@@ -4,6 +4,7 @@ import streamlit as st
 import pandas as pd
 
 from components.json_read_write import get_match_dict, update_match_dict
+from components.rule_check import rule_check
 
 
 # 文本替换
@@ -57,25 +58,34 @@ with add_new_tab:
     st.subheader("新增替换规则")
     selected_kind = st.selectbox("选择类型", ["整行替换", "标题替换"])
     if selected_kind == "整行替换":
-        english_key, add_button = st.columns(2, vertical_alignment="center")
-        with english_key:
-            filled_key = st.text_input("输入需要替换的英文")
-        with add_button:
+        filled_key = st.text_input("输入需要替换的英文")
+
+        # 规则可行性检查
+        check_info = rule_check(filled_key, row_match_dict)
+
+        if check_info == "规则可行性检查：OK":
             click_button = st.button("确认添加")
             if click_button:
                 row_match_dict[filled_key] = "\r"
                 update_match_dict("data/定制信息文本替换/整行替换规则.json", row_match_dict)
+
     if selected_kind == "标题替换":
-        english_key, chinese_value, add_button = st.columns(3, vertical_alignment="center")
+        english_key, chinese_value = st.columns(2, vertical_alignment="center")
         with english_key:
             filled_key = st.text_input("输入需要替换的英文")
         with chinese_value:
             filled_value = st.text_input("输入对应的中文翻译")
-        with add_button:
+
+        # 规则可行性检查
+        check_info = rule_check(filled_key, key_match_dict)
+
+        if check_info == "规则可行性检查：OK":
             click_button = st.button("确认添加")
             if click_button:
                 key_match_dict[filled_key] = filled_value
                 update_match_dict("data/定制信息文本替换/标题替换规则.json", key_match_dict)
+                st.success("添加成功")
+
 
 # 处理完的结果提供下载链接
 st.divider()

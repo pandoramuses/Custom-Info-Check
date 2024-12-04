@@ -4,6 +4,7 @@ import streamlit as st
 import pandas as pd
 
 from components.json_read_write import get_match_dict, update_match_dict
+from components.rule_check import rule_check
 
 
 # 获取示例数据，写入缓存不更新
@@ -127,22 +128,33 @@ with year_tab:
     st.json(year_match_dict)
 with add_new_tab:
     st.subheader("新增关键词对应关系")
-    kind, english_key, chinese_value, add_button = st.columns(4, vertical_alignment="center")
-    with kind:
-        selected_kind = st.selectbox("关键词类型", ["名字关键词", "年份关键词"])
+    selected_kind = st.selectbox("关键词类型", ["名字关键词", "年份关键词"])
+    english_key, chinese_value = st.columns(2, vertical_alignment="center")
     with english_key:
         filled_key = st.text_input("输入英文关键词")
     with chinese_value:
         filled_value = st.text_input("输入对应的中文关键词")
-    with add_button:
-        click_button = st.button("确认添加")
-        if click_button:
-            if selected_kind == "名字关键词":
+
+    # 规则可行性检查
+    if selected_kind == "名字关键词":
+        check_info = rule_check(filled_key, name_match_dict)
+
+        if check_info == "规则可行性检查：OK":
+            click_button = st.button("确认添加")
+            if click_button:
                 name_match_dict[filled_key] = filled_value
                 update_match_dict("data/宠物陶瓷球/名字关键词对应.json", name_match_dict)
-            elif selected_kind == "年份关键词":
+                st.success("添加成功")
+
+    elif selected_kind == "年份关键词":
+        check_info = rule_check(filled_key, year_match_dict)
+
+        if check_info == "规则可行性检查：OK":
+            click_button = st.button("确认添加")
+            if click_button:
                 year_match_dict[filled_key] = filled_value
                 update_match_dict("data/宠物陶瓷球/年份关键词对应.json", year_match_dict)
+                st.success("添加成功")
 
 
 # 处理完的结果提供下载链接
