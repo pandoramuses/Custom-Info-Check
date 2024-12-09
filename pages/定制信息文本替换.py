@@ -1,10 +1,8 @@
-import io
-
 import streamlit as st
-import pandas as pd
 
-from components.json_read_write import get_match_dict, update_match_dict
-from components.rule_check import rule_check
+from components.json_read_write import get_match_dict
+from components.rule_check_add import rule_check, rule_add
+from components.file_up_down_loader import excel_file_uploader, excel_downloader
 
 
 # 文本替换
@@ -32,15 +30,7 @@ def main(x, row_replace_dict, title_replace_dict):
 st.title("定制信息文本替换")
 
 # 获取文件并展示数据预览
-file = st.file_uploader("选择Excel文件", type="xlsx")
-if file is not None:
-    sheet_names = pd.read_excel(file, sheet_name=None)
-    sheet_name = st.selectbox("选择表格", sheet_names)
-    st.header("数据预览")
-    data = sheet_names[sheet_name]
-    st.dataframe(data, hide_index=True)
-else:
-    pass
+file, data = excel_file_uploader()
 
 # 读取关键词对应信息并打印
 row_match_dict = get_match_dict("data/定制信息文本替换/整行替换规则.json")
@@ -64,10 +54,7 @@ with add_new_tab:
         check_info = rule_check(filled_key, row_match_dict)
 
         if check_info == "规则可行性检查：OK":
-            click_button = st.button("确认添加")
-            if click_button:
-                row_match_dict[filled_key] = "\r"
-                update_match_dict("data/定制信息文本替换/整行替换规则.json", row_match_dict)
+            rule_add(filled_key, "\r", row_match_dict, "data/定制信息文本替换/整行替换规则.json")
 
     if selected_kind == "标题替换":
         english_key, chinese_value = st.columns(2, vertical_alignment="center")
@@ -80,24 +67,11 @@ with add_new_tab:
         check_info = rule_check(filled_key, key_match_dict)
 
         if check_info == "规则可行性检查：OK":
-            click_button = st.button("确认添加")
-            if click_button:
-                key_match_dict[filled_key] = filled_value
-                update_match_dict("data/定制信息文本替换/标题替换规则.json", key_match_dict)
-                st.success("添加成功")
+            rule_add(filled_key, filled_value, key_match_dict, "data/定制信息文本替换/标题替换规则.json")
 
 
 # 处理完的结果提供下载链接
 st.divider()
 if file is not None:
     data["定制属性"] = data["定制属性"].apply(lambda x: main(x, row_match_dict, key_match_dict))
-
-    buffer = io.BytesIO()  # 初始化结果保存的内存空间
-
-    # 将结果保存到 Excel 文件中
-    with pd.ExcelWriter(buffer) as writer:
-        data.to_excel(writer, sheet_name="处理后定制信息", index=False)
-        writer.close()
-
-        st.download_button(label="下载处理好的Excel表格", data=buffer, file_name="替换后定制信息表格.xlsx", mime="application/vnd.ms-excel")
-        st.subheader("注意：将原本的表格移动到输出的文件内，图片单元格就能正常显示")
+    excel_downloader(data, "替换后定制信息表格")

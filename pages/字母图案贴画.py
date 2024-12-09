@@ -10,19 +10,19 @@ def column_check(data, count=0):
     columns = data.columns
     try:
         if "字母" not in columns:
-            st.write("请确认所选表格中存在 '字母' 列")
+            st.error("请确认所选表格中存在 '字母' 列")
             count += 1
     finally:
         pass
 
     try:
         if "字母颜色" not in columns:
-            st.write("请确认所选表格中存在 '字母颜色' 列")
+            st.error("请确认所选表格中存在 '字母颜色' 列")
             count += 1
         else:
             data["判定"] = data["字母颜色"].apply(lambda x: 1 if "色" in x else 0)
             if data["判定"].sum() != len(data["判定"]):
-                st.write("请确认所选表格中 '字母颜色' 列是正确的颜色信息")
+                st.error("请确认所选表格中 '字母颜色' 列是正确的颜色信息")
                 count += 1
     finally:
         pass
@@ -30,7 +30,7 @@ def column_check(data, count=0):
     try:
         for i in range(1, num + 1):
             if f"补丁{i}" not in columns:
-                st.write(f"补丁{i}字段不在所选表格中，请确认最多补丁数量是否正确")
+                st.error(f"补丁{i}字段不在所选表格中，请确认最多补丁数量是否正确")
                 count += 1
     finally:
         pass
@@ -39,6 +39,7 @@ def column_check(data, count=0):
         return 0
     else:
         return 1
+
 
 # 计算各个颜色的字母贴片数量
 def cal_char_num(data):
@@ -57,8 +58,6 @@ file = st.file_uploader(label="选择Excel表格", type="xlsx")
 
 # 若未上传文件，则不进行处理
 if file is not None:
-    filename = file.name
-
     # 读取文件工作表，并输出文件中有哪些表格
     df_list = pd.read_excel(file, sheet_name=None)
     sheet_names = df_list.keys()
@@ -107,8 +106,3 @@ if file is not None:
 
             st.download_button(label="下载处理好的Excel表格", data=buffer, file_name="处理后的贴片信息.xlsx", mime="application/vnd.ms-excel")
             st.header("注意：将原本的表格移动到输出的文件内，补丁图标就能正常显示")
-    else:
-        pass
-else:
-    st.header("尚未选择文件")
-

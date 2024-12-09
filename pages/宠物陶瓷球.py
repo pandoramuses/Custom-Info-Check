@@ -1,10 +1,9 @@
-import io
-
 import streamlit as st
 import pandas as pd
 
-from components.json_read_write import get_match_dict, update_match_dict
-from components.rule_check import rule_check
+from components.json_read_write import get_match_dict
+from components.rule_check_add import rule_check, rule_add
+from components.file_up_down_loader import excel_file_uploader, excel_downloader
 
 
 # 获取示例数据，写入缓存不更新
@@ -101,14 +100,8 @@ def main(source_data, name_translate_dict, year_translate_dict, keep_columns=Non
 st.title("宠物陶瓷球定制信息整理")
 
 # 获取文件并展示数据预览
-file = st.file_uploader("选择Excel文件", type="xlsx")
-if file is not None:
-    sheet_names = pd.read_excel(file, sheet_name=None)
-    sheet_name = st.selectbox("选择表格", sheet_names)
-    st.header("数据预览")
-    data = sheet_names[sheet_name]
-    st.dataframe(data, hide_index=True)
-else:
+file, data = excel_file_uploader()
+if file is None:
     example = get_example()
     st.header("示例数据预览")
     st.dataframe(example, hide_index=True)
@@ -140,34 +133,17 @@ with add_new_tab:
         check_info = rule_check(filled_key, name_match_dict)
 
         if check_info == "规则可行性检查：OK":
-            click_button = st.button("确认添加")
-            if click_button:
-                name_match_dict[filled_key] = filled_value
-                update_match_dict("data/宠物陶瓷球/名字关键词对应.json", name_match_dict)
-                st.success("添加成功")
+            rule_add(filled_key, filled_value, name_match_dict, "data/宠物陶瓷球/名字关键词对应.json")
 
     elif selected_kind == "年份关键词":
         check_info = rule_check(filled_key, year_match_dict)
 
         if check_info == "规则可行性检查：OK":
-            click_button = st.button("确认添加")
-            if click_button:
-                year_match_dict[filled_key] = filled_value
-                update_match_dict("data/宠物陶瓷球/年份关键词对应.json", year_match_dict)
-                st.success("添加成功")
+            rule_add(filled_key, filled_value, year_match_dict, "data/宠物陶瓷球/年份关键词对应.json")
 
 
 # 处理完的结果提供下载链接
 st.divider()
 if file is not None:
     output_data = main(data, name_match_dict, year_match_dict)  # 处理完成的表格
-
-    buffer = io.BytesIO()  # 初始化结果保存的内存空间
-
-    # 将结果保存到 Excel 文件中
-    with pd.ExcelWriter(buffer) as writer:
-        output_data.to_excel(writer, sheet_name="处理后定制信息", index=False)
-        writer.close()
-
-        st.download_button(label="下载处理好的Excel表格", data=buffer, file_name="处理后的宠物陶瓷球信息表格.xlsx", mime="application/vnd.ms-excel")
-        st.subheader("注意：将原本的表格移动到输出的文件内，图片单元格就能正常显示")
+    excel_downloader(output_data, "处理后的宠物陶瓷球表格")
