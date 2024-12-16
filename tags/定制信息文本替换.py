@@ -1,7 +1,7 @@
 import streamlit as st
 
 from components.json_read_write import get_match_dict
-from components.rule_check_add import rule_check, rule_add
+from components.rule_check_add import rule_add
 from components.file_up_down_loader import excel_file_uploader, excel_downloader
 
 
