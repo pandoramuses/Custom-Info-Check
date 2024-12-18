@@ -12,7 +12,8 @@ def title_replace(x, replace_dict):
     replaced_parts = []  # 每行处理后的结果列表
     for part_text in part_text_list:  # 遍历每行定制信息
         replaced_text = part_text.strip()  # 删除多余空格
-        custom_title, custom_value = part_text.split(":")  # 原本定制信息以冒号为分割符拆分为标题信息和值信息
+        custom_title = part_text.split(":")[0]
+        custom_value = "".join(part_text.split(":")[1:])
         custom_title = custom_title.strip()  # 标题信息删除多余空格
         custom_value = custom_value.strip()  # 值信息删除多余空格
         for key, value in replace_dict.items():  # 遍历规则字典
@@ -55,6 +56,17 @@ def row_replace(x, replace_dict):
         replaced_parts.append(replaced_text)
     # 使用分隔符重新连接
     return "\r".join(replaced_parts)
+
+
+# 最后处理多余的换行符
+def multi_new_line_check(x):
+    while "\r\r" in x:
+        x = x.replace("\r\r", "\r")
+    if x[0] == "\r":
+        x[0] = ""
+    if x[-1] == "\r":
+        x[-1] = ""
+    return x
 
 
 # 页面布局
@@ -142,4 +154,5 @@ if file is not None:
     data["定制属性"] = data["定制属性"].apply(lambda x: title_replace(x, key_match_dict))
     data["定制属性"] = data["定制属性"].apply(lambda x: title_row_replace(x, key_row_match_dict))
     data["定制属性"] = data["定制属性"].apply(lambda x: row_replace(x, row_match_dict))
+    data["定制属性"] = data["定制属性"].apply(multi_new_line_check)
     excel_downloader(data, "替换后定制信息表格")
