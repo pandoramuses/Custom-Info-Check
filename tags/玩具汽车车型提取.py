@@ -19,7 +19,7 @@ match_dict = get_match_dict("data/玩具汽车/车型对应关系.json")
 style_tab, add_new_tab = st.tabs(["款式对应关系", "新增对应关系"])
 with style_tab:
     st.subheader("款式对应关系")
-    st.json(match_dict)
+    st.json(match_dict, expanded=False)
 with add_new_tab:
     st.subheader("新增对应关系")
     english_key, chinese_value = st.columns(2, vertical_alignment="center")

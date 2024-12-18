@@ -115,18 +115,18 @@ year_match_dict = get_match_dict("data/宠物陶瓷球/年份关键词对应.jso
 name_tab, year_tab, add_new_tab = st.tabs(["名字关键词", "年份关键词", "新增关键词"])
 with name_tab:
     st.subheader("名字关键词对应关系")
-    st.json(name_match_dict)
+    st.json(name_match_dict, expanded=False)
 with year_tab:
     st.subheader("年份关键词对应关系")
-    st.json(year_match_dict)
+    st.json(year_match_dict, expanded=False)
 with add_new_tab:
     st.subheader("新增关键词对应关系")
     selected_kind = st.selectbox("关键词类型", ["名字关键词", "年份关键词"])
     english_key, chinese_value = st.columns(2, vertical_alignment="center")
     with english_key:
-        filled_key = st.text_input("输入英文关键词")
+        filled_key = st.text_input("输入英文关键词").strip()
     with chinese_value:
-        filled_value = st.text_input("输入对应的中文关键词")
+        filled_value = st.text_input("输入对应的中文关键词").strip()
 
     # 规则可行性检查
     if selected_kind == "名字关键词":

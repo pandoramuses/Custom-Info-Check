@@ -21,13 +21,13 @@ color_match_dict = get_match_dict("data/服装规格信息提取/衣服颜色.js
 style_tab, size_tab, color_tab, add_new_tab = st.tabs(["款式对应关系", "尺码对应关系", "颜色对应关系", "新增对应关系"])
 with style_tab:
     st.subheader("款式对应关系")
-    st.json(style_match_dict)
+    st.json(style_match_dict, expanded=False)
 with size_tab:
     st.subheader("尺码对应关系")
-    st.json(size_match_dict)
+    st.json(size_match_dict, expanded=False)
 with color_tab:
     st.subheader("颜色对应关系")
-    st.json(color_match_dict)
+    st.json(color_match_dict, expanded=False)
 with add_new_tab:
     st.subheader("新增对应关系")
     selected_kind = st.selectbox("选择类型", ["款式对应关系", "尺码对应关系", "颜色对应关系"])
@@ -63,9 +63,8 @@ with add_new_tab:
 st.divider()
 if file is not None:
     # 分别对衣服的款式、尺码和颜色进行检查并替换关键词
-    data["定制属性"] = data["定制属性"].apply(lambda x: replace_custom_info(x, style_match_dict))
-    data["定制属性"] = data["定制属性"].apply(lambda x: replace_custom_info(x, size_match_dict))
-    data["定制属性"] = data["定制属性"].apply(lambda x: replace_custom_info(x, color_match_dict))
+    for match_dict in [style_match_dict, size_match_dict, color_match_dict]:
+        data["定制属性"] = data["定制属性"].apply(lambda x: replace_custom_info(x, match_dict))
     # 将衣服款式、尺码和颜色信息提取成列
     for title in ["款式", "尺码", "衣服颜色"]:
         data[title] = data["定制属性"].apply(lambda x: get_custom_info(x, title))
