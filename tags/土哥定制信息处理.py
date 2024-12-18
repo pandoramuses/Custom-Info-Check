@@ -70,7 +70,7 @@ def multi_new_line_check(x):
 
 
 # 页面布局
-st.title("定制信息文本替换")
+st.title("土哥定制信息处理")
 
 st.subheader("替换规则说明")
 st.markdown(
@@ -80,8 +80,8 @@ st.markdown(
 
     | 原表述 | 替换后结果 |
     | :---: | :---: |
-    | Choose Blanket Color : Black | 毛毯颜色:Black |
-    | Song Title : Worst Way | 歌曲名:Worst Way |
+    | EST.Year : 2024 | 年份1:2024 |
+    | Add Text On Left Sleeve : Worst Way | 左袖文案:Worst Way |
 
     2. **标题整行替换：比对每行定制信息的标题是否与录入的规则标题一致，如果一致，整行删除**
         - 只需要输入英文文本
@@ -96,8 +96,8 @@ st.markdown(
     
     | 原表述 | 替换后结果 |
     | :---: | :---: |
-    | Choose Blanket Color : Black | 毛毯颜色：黑色 |
-    | Add VIP Service : No, thanks | 识别到没有添加对应表述，整行删除 |
+    | EST.Year : 2024 | 年份1：2024 |
+    | Add an icon : No.Thanks | 识别到没有添加对应表述，整行删除 |
     """
 )
 st.info("程序将按照：标题替换 -> 标题整行替换 -> 整行替换 的顺序处理，在添加规则时留意替换方式的选择！")
@@ -107,9 +107,9 @@ st.divider()
 file, data = excel_file_uploader()
 
 # 读取替换规则并输出
-key_match_dict = get_match_dict("data/定制信息文本替换/标题替换规则.json")
-key_row_match_dict = get_match_dict("data/定制信息文本替换/标题整行替换规则.json")
-row_match_dict = get_match_dict("data/定制信息文本替换/整行替换规则.json")
+key_match_dict = get_match_dict("data/土哥定制信息处理/标题替换规则.json")
+key_row_match_dict = get_match_dict("data/土哥定制信息处理/标题整行替换规则.json")
+row_match_dict = get_match_dict("data/土哥定制信息处理/整行替换规则.json")
 
 
 # 打印关键词信息，便于查验是否需要补充，如果需要补充，手动输入进行补充
@@ -136,16 +136,16 @@ with add_new_tab:
 
     # 根据替换模式，将新替换规则写入对应文件
     if mode == "标题替换":
-        rule_add(filled_key, filled_value, key_match_dict, "data/定制信息文本替换/标题替换规则.json")
+        rule_add(filled_key, filled_value, key_match_dict, "data/土哥定制信息处理/标题替换规则.json")
 
     if mode == "标题整行替换":
-        rule_add(filled_key, "", key_row_match_dict, "data/定制信息文本替换/标题整行替换规则.json")
+        rule_add(filled_key, "", key_row_match_dict, "data/土哥定制信息处理/标题整行替换规则.json")
 
     if mode == "整行替换":
         if filled_value != "":
-            rule_add(filled_key, filled_value, row_match_dict, "data/定制信息文本替换/整行替换规则.json")
+            rule_add(filled_key, filled_value, row_match_dict, "data/土哥定制信息处理/整行替换规则.json")
         else:
-            rule_add(filled_key, "\r", row_match_dict, "data/定制信息文本替换/整行替换规则.json")
+            rule_add(filled_key, "\r", row_match_dict, "data/土哥定制信息处理/整行替换规则.json")
 
 
 # 处理完的结果提供下载链接
