@@ -12,10 +12,8 @@ def title_replace(x, replace_dict):
     replaced_parts = []  # 每行处理后的结果列表
     for part_text in part_text_list:  # 遍历每行定制信息
         replaced_text = part_text.strip()  # 删除多余空格
-        custom_title = part_text.split(":")[0]
-        custom_value = "".join(part_text.split(":")[1:])
-        custom_title = custom_title.strip()  # 标题信息删除多余空格
-        custom_value = custom_value.strip()  # 值信息删除多余空格
+        custom_title = part_text.split(":")[0].strip()  # 标题信息删除多余空格
+        custom_value = "".join(part_text.split(":")[1:]).strip()  # 值信息删除多余空格
         for key, value in replace_dict.items():  # 遍历规则字典
             if custom_title == key:  # 当标题信息在规则字典中
                 replaced_text = ":".join([value, custom_value])  # 将替换后标题表述和原本值信息组合成输出结果

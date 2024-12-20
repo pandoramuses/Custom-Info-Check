@@ -130,15 +130,11 @@ with add_new_tab:
 
     # 规则可行性检查
     if selected_kind == "名字关键词":
-        check_info = rule_check(filled_key, name_match_dict)
-
-        if check_info == "规则可行性检查：OK":
+        if rule_check(filled_key, name_match_dict) == "规则可行性检查：OK":
             rule_add(filled_key, filled_value, name_match_dict, "data/宠物陶瓷球/名字关键词对应.json")
 
     elif selected_kind == "年份关键词":
-        check_info = rule_check(filled_key, year_match_dict)
-
-        if check_info == "规则可行性检查：OK":
+        if rule_check(filled_key, year_match_dict) == "规则可行性检查：OK":
             rule_add(filled_key, filled_value, year_match_dict, "data/宠物陶瓷球/年份关键词对应.json")
 
 

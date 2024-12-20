@@ -1,10 +1,23 @@
+import re
+
 # 逐行遍历定制信息，整行内容与规则一致的进行替换
-def replace_custom_info(x, dict_info):
+def replace_custom_info(x, dict_info, _split=True):
     x_formated = x.replace("\r\n", "\r").replace("\n", "\r")  # 统一分隔符
+    x_formated = x_formated.replace("：", ":")  # 将中文冒号替换成英文冒号
+    x_formated = x_formated.replace("*", "")  # 将剔除*
+    x_formated = x_formated.lower()  # 将定制信息统一改成小写，缩减比对字典
     x_split_list = x_formated.split("\r")  # 根据分隔符拆分每行定制信息
 
     return_x_list = []  # 每行定制信息处理后列表
     for _x in x_split_list:
+        # 处理定制信息不规范导致的异常规则
+        custom_name = _x.split(":")[0].strip()
+        custom_value = "".join(_x.split(":")[1:]).strip()
+        main_custom_name = "-".join([_.strip() for _ in custom_name.split("-") if re.match(r"^[0-9]+$", _.strip()) is None])
+        _x = ":".join([main_custom_name, custom_value])  # 剔除定制标题重复，插件自动添加的数字后缀
+        _x = _x.split("|")[0].strip()  # 剔除定制加钱金额部分，减少所需规则数量
+
+        # 替换结果输出
         return_x = _x.strip()  # 默认返回未替换的定制信息
         # 检查整行定制信息是否与规则一致，如果一致则进行替换
         if return_x in dict_info.keys():
@@ -29,3 +42,12 @@ def get_custom_info(x, key_word):
         return result_list[0]
     elif len(result_list) > 1:
         return "\r".join(result_list)
+
+
+# 添加规则时将规则进行标准格式的处理
+def format_rule_text(text):
+    text = text.lower()  # 统一转为小写，便于比对
+    name = text.split(":")[0].strip()  # 获取定制标题
+    value = "".join(text.split(":")[1:]).strip()  # 获取定制属性值
+    format_text = ":".join([name, value])  # 处理后的规则文本
+    return format_text

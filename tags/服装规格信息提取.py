@@ -1,9 +1,9 @@
 import streamlit as st
 
 from components.json_read_write import get_match_dict
-from components.rule_check_add import rule_check, rule_add
+from components.rule_check_add import rule_add
 from components.file_up_down_loader import excel_file_uploader, excel_downloader
-from components.replace_get_custom_info import replace_custom_info, get_custom_info
+from components.replace_get_custom_info import replace_custom_info, get_custom_info, format_rule_text
 
 
 # 页面布局
@@ -33,30 +33,19 @@ with add_new_tab:
     selected_kind = st.selectbox("选择类型", ["款式对应关系", "尺码对应关系", "颜色对应关系"])
     english_key, chinese_value = st.columns(2, vertical_alignment="center")
     with english_key:
-        filled_key = st.text_input("英文表述")
+        filled_key = st.text_input("英文表述")  # 获取添加的规则
+        format_filled_key = format_rule_text(filled_key)
     with chinese_value:
         filled_value = st.text_input("中文表述")
 
     if selected_kind == "款式对应关系":
-        # 规则可行性检查
-        check_info = rule_check(filled_key, style_match_dict)
-
-        if check_info == "规则可行性检查：OK":
-            rule_add(filled_key, filled_value, style_match_dict, "data/服装规格信息提取/款式.json")
+        rule_add(format_filled_key, filled_value, style_match_dict, "data/服装规格信息提取/款式.json")
 
     if selected_kind == "尺码对应关系":
-        # 规则可行性检查
-        check_info = rule_check(filled_key, size_match_dict)
-
-        if check_info == "规则可行性检查：OK":
-            rule_add(filled_key, filled_value, size_match_dict, "data/服装规格信息提取/尺码.json")
+        rule_add(format_filled_key, filled_value, size_match_dict, "data/服装规格信息提取/尺码.json")
 
     if selected_kind == "颜色对应关系":
-        # 规则可行性检查
-        check_info = rule_check(filled_key, color_match_dict)
-
-        if check_info == "规则可行性检查：OK":
-            rule_add(filled_key, filled_value, color_match_dict, "data/服装规格信息提取/衣服颜色.json")
+        rule_add(format_filled_key, filled_value, color_match_dict, "data/服装规格信息提取/衣服颜色.json")
 
 
 # 处理完的结果提供下载链接

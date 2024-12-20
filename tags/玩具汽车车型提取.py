@@ -3,7 +3,7 @@ import streamlit as st
 from components.json_read_write import get_match_dict
 from components.rule_check_add import rule_add
 from components.file_up_down_loader import excel_file_uploader, excel_downloader
-from components.replace_get_custom_info import replace_custom_info, get_custom_info
+from components.replace_get_custom_info import replace_custom_info, get_custom_info, format_rule_text
 
 
 # 页面布局
@@ -25,10 +25,11 @@ with add_new_tab:
     english_key, chinese_value = st.columns(2, vertical_alignment="center")
     with english_key:
         filled_key = st.text_input("英文表述")
+        format_filled_key = format_rule_text(filled_key)
     with chinese_value:
         filled_value = st.text_input("中文表述")
 
-    rule_add(filled_key, filled_value, match_dict, "data/玩具汽车/车型对应关系.json")
+    rule_add(format_rule_text, filled_value, match_dict, "data/玩具汽车/车型对应关系.json")
 
 
 # 处理完的结果提供下载链接
