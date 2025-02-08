@@ -12,7 +12,7 @@ def excel_file_uploader():
         sheet_name = st.selectbox("选择表格", sheet_names)
         st.header("数据预览")
         data = sheet_names[sheet_name]
-        st.dataframe(data, hide_index=True)
+        st.dataframe(data, hide_index=True, use_container_width=True)
         return file, data
     else:
         return file, None

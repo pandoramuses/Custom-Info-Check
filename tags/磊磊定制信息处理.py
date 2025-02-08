@@ -3,68 +3,7 @@ import streamlit as st
 from components.json_read_write import get_match_dict
 from components.rule_check_add import rule_add
 from components.file_up_down_loader import excel_file_uploader, excel_downloader
-
-
-# 标题替换
-def title_replace(x, replace_dict):
-    x = x.replace("\r\n", "\r").replace("\n", "\r")  # 统一分隔符
-    part_text_list = x.split("\r")  # 拆分每行定制信息
-    replaced_parts = []  # 每行处理后的结果列表
-    for part_text in part_text_list:  # 遍历每行定制信息
-        replaced_text = part_text.strip()  # 删除多余空格
-        custom_title = part_text.split(":")[0].strip()  # 标题信息删除多余空格
-        custom_value = "".join(part_text.split(":")[1:]).strip()  # 值信息删除多余空格
-        for key, value in replace_dict.items():  # 遍历规则字典
-            if custom_title == key:  # 当标题信息在规则字典中
-                replaced_text = ":".join([value, custom_value])  # 将替换后标题表述和原本值信息组合成输出结果
-        replaced_parts.append(replaced_text)
-    # 使用分隔符重新连接
-    return "\r".join(replaced_parts)
-
-
-# 根据标题整行删除
-def title_row_replace(x, replace_dict):
-    x = x.replace("\r\n", "\r").replace("\n", "\r")  # 统一分隔符
-    part_text_list = x.split("\r")  # 拆分每行定制信息
-    replaced_parts = []  # 每行处理后的结果列表
-    for part_text in part_text_list:  # 遍历每行定制信息
-        replaced_text = part_text.strip()  # 删除多余空格
-        custom_title = part_text.split(":")[0]  # 以冒号作分割提取标题信息
-        custom_title = custom_title.strip()  # 标题信息删除多余空格
-        for key, value in replace_dict.items():  # 遍历规则字典
-            if custom_title == key:  # 当标题信息在规则字典中
-                replaced_text = "\r"  # 将整行定制信息删除
-        replaced_parts.append(replaced_text)
-    # 使用分隔符重新连接
-    return "\r".join(replaced_parts)
-
-
-# 整行替换
-def row_replace(x, replace_dict):
-    while "\r\r" in x:
-        x = x.replace("\r\r", "\r")
-    x = x.replace("\r\n", "\r").replace("\n", "\r")
-    part_text_list = x.split("\r")
-    replaced_parts = []
-    for part_text in part_text_list:
-        replaced_text = part_text.strip()
-        for key, value in replace_dict.items():
-            if key == replaced_text:  # 检查是否存在key，减少不必要的操作
-                replaced_text = value
-        replaced_parts.append(replaced_text)
-    # 使用分隔符重新连接
-    return "\r".join(replaced_parts)
-
-
-# 最后处理多余的换行符
-def multi_new_line_check(x):
-    while "\r\r" in x:
-        x = x.replace("\r\r", "\r")
-    if x[0] == "\r":
-        x[0] = ""
-    if x[-1] == "\r":
-        x[-1] = ""
-    return x
+from components.custom_info_replace import title_replace, title_row_replace, row_replace,multi_new_line_check
 
 
 # 页面布局
