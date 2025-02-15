@@ -57,7 +57,18 @@ with add_tab:
                 conn.commit()
                 st.success("添加成功")
         else:
-            st.error("对应定制信息已存在对应规则")
+            dul_rule_types = rules[rules["英文表述"] == format_filled_key]["类型"].tolist()
+            if type_name not in dul_rule_types:
+                try:
+                    cur.execute(f"""insert into rules ("type", "english", "chinese") values (?, ?, ?);""",
+                                (type_name, format_filled_key, filled_value))
+                except Exception as e:
+                    st.error(e)
+                else:
+                    conn.commit()
+                    st.success("添加成功")
+            else:
+                st.error("对应定制信息已存在对应规则")
 
 
 
