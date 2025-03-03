@@ -20,9 +20,20 @@ def rule_check(filled_key, check_dict):
 
 
 # 将可以添加的规则加入规则字典中，并复写规则JSON文件
-def rule_add(filled_key, filled_value, target_dict, target_file_path):
+def rule_add(filled_goods_type, filled_key, filled_value, target_dict, target_file_path):
     click_button = st.button("确认添加")
     if click_button:
-        target_dict[filled_key] = filled_value
+        if filled_goods_type not in target_dict.keys():
+            target_dict[filled_goods_type] = dict()
+            if filled_key not in target_dict[filled_goods_type].keys():
+                target_dict[filled_goods_type][filled_key] = filled_value
+                st.success("添加成功")
+            else:
+                st.error("已存在对应规则")
+        else:
+            if filled_key not in target_dict[filled_goods_type].keys():
+                target_dict[filled_goods_type][filled_key] = filled_value
+                st.success("添加成功")
+            else:
+                st.error("已存在对应规则")
         update_match_dict(target_file_path, target_dict)
-        st.success("添加成功")
