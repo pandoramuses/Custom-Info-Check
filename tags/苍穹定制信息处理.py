@@ -1,3 +1,5 @@
+import re
+
 import streamlit as st
 
 from components.json_read_write import get_match_dict
@@ -33,9 +35,10 @@ with add_new_tab:
     # 替换文本记录
     goods_type, input_key, input_value = st.columns(3, vertical_alignment="center")
     with goods_type:
-        filled_goods_type = st.text_input("输入商品品类（尽量复用已有品类名称）").split("-")[0].strip()
+        filled_goods_type = st.text_input("输入商品品类（尽量复用已有品类名称）").strip()
     with input_key:
         filled_key = st.text_input("输入需要替换的英文文本").strip().lower()
+        filled_key = "-".join([_.strip() for _ in filled_key.split("-") if re.match(r"^[0-9]+$", _.strip()) is None])  # 剔除重名定制标题，插件自动加的后缀
     with input_value:
         filled_value = st.text_input("输入对应的中文表述").strip()
 

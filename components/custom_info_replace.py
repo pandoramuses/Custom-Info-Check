@@ -1,3 +1,5 @@
+import re
+
 # 标题替换
 def title_replace(x, replace_dict):
     x = x.replace("\r\n", "\r").replace("\n", "\r")  # 统一分隔符
@@ -5,10 +7,11 @@ def title_replace(x, replace_dict):
     replaced_parts = []  # 每行处理后的结果列表
     for part_text in part_text_list:  # 遍历每行定制信息
         replaced_text = part_text.split("|")[0].strip()  # 删除加价金额后删除多余空格
-        custom_title = replaced_text.split(":")[0].split("-")[0].strip().lower()  # 标题信息删除多余空格并统一转为小写
+        custom_title = replaced_text.split(":")[0].strip().lower()  # 标题信息删除多余空格并统一转为小写
+        main_custom_title = "-".join([_.strip() for _ in custom_title.split("-") if re.match(r"^[0-9]+$", _.strip()) is None])  # 剔除重名定制标题，插件自动加的后缀
         custom_value = "".join(replaced_text.split(":")[1:]).strip()  # 值信息删除多余空格
         for key, value in replace_dict.items():  # 遍历规则字典
-            if custom_title == key:  # 当标题信息在规则字典中
+            if main_custom_title == key:  # 当标题信息在规则字典中
                 replaced_text = ":".join([value, custom_value])  # 将替换后标题表述和原本值信息组合成输出结果
         replaced_parts.append(replaced_text)
     # 使用分隔符重新连接
