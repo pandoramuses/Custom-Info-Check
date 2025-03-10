@@ -36,7 +36,9 @@
     "custom title above": "上面的标题",
     "choose mom's title": "上面的标题",
     "choose grandma's title": "下面的标题",
-    "choose your left nickname": "左侧大标题"
+    "choose your left nickname": "左侧大标题",
+    "flower color #2": "花朵颜色",
+    "choisissez la couleur de la rose": "花朵颜色"
   },
   "单月相": {
     "1st sentence options": "第一句文案",
@@ -51,7 +53,14 @@
     "add your text": "定制月相文案",
     "customized bottom text": "选择月相下几句话文案",
     "add last line text": "底部文案",
-    "custom title": "大标题"
+    "custom title": "大标题",
+    "Choose Title Above": "上面的标题",
+    "Choose Title Below": "下面的标题",
+    "Enter Title Above": "定制上面的标题",
+    "Enter Title Below": "定制下面的标题",
+    "Custom Title Below": "定制下面的标题",
+    "Date Format": "日期格式",
+    "Choose Date Format": "日期格式"
   },
   "名字灯": {
     "choose quotes": "定制文案",
@@ -138,7 +147,10 @@
     "wählen sie ihre grußkarte": "绣线颜色",
     "choose print color": "设计图颜色",
     "choose design color": "设计图颜色",
-    "choose name design color": "设计图颜色"
+    "choose name design color": "设计图颜色",
+    "Design Placement": "设计图位置",
+    "Stickposition": "设计图位置",
+    "Choose Design On The Sleeve": "袖口图标"
   },
   "闪片卫衣": {
     "glitter color (nickname)": "标题颜色",
@@ -228,5 +240,21 @@
     "sélectionner la quantité": "照片数量",
     "style": "单双面照片",
     "nombre de pages de photos": "铝片数量"
+  },
+  "月份花摆件灯": {
+    "base title": "底座标题",
+    "bottom text": "底座文本",
+    "flower 1": "月份花",
+    "flower 2": "月份花",
+    "flower 3": "月份花",
+    "flower 4": "月份花",
+    "flower 5": "月份花",
+    "flower 6": "月份花",
+    "flower 7": "月份花",
+    "flower 8": "月份花",
+    "flower 9": "月份花",
+    "flower 10": "月份花",
+    "flower 11": "月份花",
+    "flower 12": "月份花"
   }
 }
