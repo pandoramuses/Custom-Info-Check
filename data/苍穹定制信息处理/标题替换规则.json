@@ -256,5 +256,11 @@
     "flower 10": "月份花",
     "flower 11": "月份花",
     "flower 12": "月份花"
+  },
+  "宠物帆布画": {
+    "how many pets do you want to portray?": "宠物数量",
+    "how many pets in one portray?": "宠物数量",
+    "choose your size": "尺寸",
+    "spe": "尺寸"
   }
 }
