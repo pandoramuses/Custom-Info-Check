@@ -82,8 +82,11 @@
   "毛毯": {
     "material": "材质",
     "type": "材质",
+    "style": "材质",
     "size": "尺寸",
-    "choose blanket color": "颜色"
+    "choose blanket color": "颜色",
+    "choose nickname": "大标题",
+    "number of dinosaurs": "恐龙数量"
   },
   "服装基础信息": {
     "style": "款式",
