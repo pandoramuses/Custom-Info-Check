@@ -265,5 +265,13 @@
     "how many pets in one portray?": "宠物数量",
     "choose your size": "尺寸",
     "spe": "尺寸"
+  },
+  "镜子灯": {
+    "spe": "尺寸",
+    "size": "尺寸"
+  },
+  "摆件灯": {
+    "size": "尺寸",
+    "spe": "尺寸"
   }
 }
