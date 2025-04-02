@@ -38,7 +38,8 @@
     "choose grandma's title": "下面的标题",
     "choose your left nickname": "左侧大标题",
     "flower color #2": "花朵颜色",
-    "choisissez la couleur de la rose": "花朵颜色"
+    "choisissez la couleur de la rose": "花朵颜色",
+    "customize big nickname name": "大标题"
   },
   "单月相": {
     "1st sentence options": "第一句文案",
@@ -54,13 +55,13 @@
     "customized bottom text": "选择月相下几句话文案",
     "add last line text": "底部文案",
     "custom title": "大标题",
-    "Choose Title Above": "上面的标题",
-    "Choose Title Below": "下面的标题",
-    "Enter Title Above": "定制上面的标题",
-    "Enter Title Below": "定制下面的标题",
-    "Custom Title Below": "定制下面的标题",
-    "Date Format": "日期格式",
-    "Choose Date Format": "日期格式"
+    "choose title above": "上面的标题",
+    "choose title below": "下面的标题",
+    "enter title above": "定制上面的标题",
+    "enter title below": "定制下面的标题",
+    "custom title below": "定制下面的标题",
+    "date format": "日期格式",
+    "choose date format": "日期格式"
   },
   "名字灯": {
     "choose quotes": "定制文案",
@@ -151,9 +152,14 @@
     "choose print color": "设计图颜色",
     "choose design color": "设计图颜色",
     "choose name design color": "设计图颜色",
-    "Design Placement": "设计图位置",
-    "Stickposition": "设计图位置",
-    "Choose Design On The Sleeve": "袖口图标"
+    "design color": "设计图颜色",
+    "design placement": "设计图位置",
+    "stickposition": "设计图位置",
+    "photo design placement": "设计图位置",
+    "embroidery position": "设计图位置",
+    "choose design on the sleeve": "袖口图标",
+    "text sleeve on left or right": "袖子内容位置",
+    "text color options": "文本颜色"
   },
   "闪片卫衣": {
     "glitter color (nickname)": "标题颜色",
