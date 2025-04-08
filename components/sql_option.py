@@ -1,7 +1,6 @@
 import mysql.connector
 
 import pandas as pd
-import streamlit as st
 
 
 # 连接数据库
