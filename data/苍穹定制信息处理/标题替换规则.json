@@ -39,7 +39,8 @@
     "choose your left nickname": "左侧大标题",
     "flower color #2": "花朵颜色",
     "choisissez la couleur de la rose": "花朵颜色",
-    "customize big nickname name": "大标题"
+    "customize big nickname name": "大标题",
+    "choose multiple rose colors": "花朵颜色"
   },
   "单月相": {
     "1st sentence options": "第一句文案",
@@ -99,6 +100,7 @@
     "choose t-shirt color": "T恤颜色",
     "choisissez la couleur du tshirt": "T恤颜色",
     "choisissez la couleur du t-shirt": "T恤颜色",
+    "t-shirt": "T恤颜色",
     "choose sweatshirt color": "圆领颜色",
     "adult crewneck color": "圆领颜色",
     "sweatshirt color：": "圆领颜色",
@@ -113,6 +115,7 @@
     "choisissez la couleur du hoodie": "连帽颜色",
     "adult hoodie color": "连帽颜色",
     "choose hoodie color": "连帽颜色",
+    "hoodie": "连帽颜色",
     "number of kids' names": "袖口名字数量",
     "number of sleevs names": "袖口名字数量",
     "choose number of sleeves names": "袖口名字数量",
@@ -279,5 +282,9 @@
   "摆件灯": {
     "size": "尺寸",
     "spe": "尺寸"
+  },
+  "亮片卫衣": {
+    "sequin color": "亮片颜色",
+    "sequin style": "亮片颜色"
   }
 }
