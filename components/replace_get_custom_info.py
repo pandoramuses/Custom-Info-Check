@@ -1,5 +1,6 @@
 import re
 
+
 # 逐行遍历定制信息，定制标题与规则一致时进行替换
 def replace_custom_info(x, dict_info):
     x_formated = x.replace("\r\n", "\r").replace("\n", "\r")  # 统一分隔符
@@ -10,11 +11,15 @@ def replace_custom_info(x, dict_info):
     return_x_list = []  # 每行定制信息处理后列表
     for _x in x_split_list:
         # 定制标题
-        custom_name = _x.split(":")[0].strip()  # 定制标题
-        custom_name = "-".join([_.strip() for _ in custom_name.split("-") if re.match(r"^[0-9]+$", _.strip()) is None])  # 剔除重名定制标题，插件自动加的后缀
+        custom_name = _x.split(":")[0].strip()
+        # 剔除重名定制标题，插件自动加的后缀
+        custom_name = "-".join([_.strip() for _ in custom_name.split("-") if re.match(r"^[0-9]+$", _.strip()) is None])
 
         # 定制属性值
-        custom_value = "".join(_x.split(":")[1:]).strip()  # 定制属性
+        custom_value = "".join(
+            "-".join([___.strip() for ___ in __.split("-") if re.match(r"^[0-9]+$", ___.strip()) is None])
+            for __ in [_.strip() for _ in _x.split(":")[1:]]
+        ).strip()
         custom_value = custom_value.split("|")[0].strip()  # 剔除定制加钱金额部分，尽可能合并定制信息值
 
         # 检查定制标题是否与规则一致，如果一致则进行替换，否则返回未替换的定制信息
